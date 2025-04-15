@@ -2,6 +2,8 @@ package dmk.poc.publishinghouseservice.service.impl;
 
 import dmk.poc.publishinghouseservice.dto.BookDto;
 import dmk.poc.publishinghouseservice.service.BookService;
+import lombok.RequiredArgsConstructor;
+import net.datafaker.Faker;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,14 +12,19 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
     private final Map<String, BookDto> books = new HashMap<>();
 
+    private final Faker faker;
+
     @Override
     public BookDto storeBook() {
-        // TODO Add data-faker to generate a book
-        return null;
+        var fakerBook = faker.book();
+        return createBook(
+                new BookDto(faker.code().ean13(), fakerBook.title(), fakerBook.author(), fakerBook.publisher(), fakerBook.genre())
+        );
     }
 
     @Override

@@ -1,3 +1,10 @@
 spring:
   application:
     name: publishing-house-service
+
+server:
+  port: 3000
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
