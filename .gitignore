@@ -128,3 +128,7 @@ fabric.properties
 hs_err_pid*
 replay_pid*
 
+/iac/.terraform/
+/iac/.terraform.lock.hcl
+/iac/terraform.tfstate
+/iac/terraform.tfstate.backup
