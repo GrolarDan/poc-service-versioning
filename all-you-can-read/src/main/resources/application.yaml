@@ -1,0 +1,6 @@
+server:
+  port: 3100
+
+spring:
+  application:
+    name: all-you-can-read

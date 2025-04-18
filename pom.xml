@@ -26,6 +26,7 @@
 
     <modules>
         <module>publishing-house-service</module>
+        <module>all-you-can-read</module>
     </modules>
 
     <dependencyManagement>
