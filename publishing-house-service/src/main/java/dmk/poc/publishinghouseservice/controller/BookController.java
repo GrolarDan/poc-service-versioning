@@ -4,11 +4,13 @@ import dmk.poc.publishinghouseservice.dto.BookDto;
 import dmk.poc.publishinghouseservice.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController(value = BookController.VERSION_PATH + BookController.BASE_PATH)
+@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class BookController {
     static final String VERSION_PATH = "/v1";

@@ -1,8 +1,11 @@
 package dmk.poc.publishinghouseservice.service.impl;
 
 import dmk.poc.publishinghouseservice.dto.BookDto;
+import dmk.poc.publishinghouseservice.dto.BookEventType;
 import dmk.poc.publishinghouseservice.service.BookService;
+import dmk.poc.publishinghouseservice.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +16,13 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookServiceImpl implements BookService {
 
     private final Map<String, BookDto> books = new HashMap<>();
 
     private final Faker faker;
+    private final NotificationService notificationService;
 
     @Override
     public BookDto storeBook() {
@@ -34,6 +39,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto createBook(BookDto bookDto) {
+        log.info("Creating book: {}", bookDto);
+
         if (bookDto == null || bookDto.isbn() == null) {
             throw new IllegalArgumentException("BookDto and ISBN cannot be null");
         }
@@ -42,11 +49,18 @@ public class BookServiceImpl implements BookService {
             throw new IllegalArgumentException("Book with this ISBN already exists");
         }
 
-        return books.put(bookDto.isbn(), bookDto);
+        var result = books.put(bookDto.isbn(), bookDto);
+        if (result != null) {
+            notificationService.sendNotification(bookDto, BookEventType.BOOK_CREATED);
+        }
+
+        return result;
     }
 
     @Override
     public BookDto updateBook(String isbn, BookDto bookDto) {
+        log.info("Updating book: {}", bookDto);
+
         if (isbn == null || bookDto == null) {
             throw new IllegalArgumentException("ISBN and BookDto cannot be null");
         }
@@ -59,7 +73,12 @@ public class BookServiceImpl implements BookService {
             throw new IllegalArgumentException("Book with this ISBN does not exist");
         }
 
-        return books.put(isbn, bookDto);
+        var result = books.put(isbn, bookDto);
+        if (result != null) {
+            notificationService.sendNotification(bookDto, BookEventType.BOOK_UPDATED);
+        }
+
+        return result;
     }
 
     @Override
@@ -69,6 +88,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteBook(String isbn) {
-        books.remove(isbn);
+        log.info("Deleting book with ISBN: {}", isbn);
+        
+        var result = books.remove(isbn);
+        if (result != null) {
+            notificationService.sendNotification(result, BookEventType.BOOK_DELETED);
+        }
     }
 }

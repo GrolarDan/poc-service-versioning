@@ -45,10 +45,9 @@ provider "aws" {
   }
 }
 
-resource "aws_sqs_queue" "book-queue" {
-  name                      = "book-queue"
-  delay_seconds             = 30
-  receive_wait_time_seconds = 30
+resource "aws_sns_topic" "book-topic" {
+  name         = "book-topic"
+  display_name = "Book Topic"
 
   tags = {
     Environment = "local"

@@ -1,9 +1,19 @@
+server:
+  port: 3000
+
 spring:
   application:
     name: publishing-house-service
+  cloud:
+    aws:
+      credentials:
+        access-key: test
+        secret-key: test
+      sns:
+        endpoint: http://localhost:4566
 
-server:
-  port: 3000
+app:
+  topic-name: book-topic
 
 springdoc:
   swagger-ui:
