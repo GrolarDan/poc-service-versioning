@@ -49,12 +49,10 @@ public class BookServiceImpl implements BookService {
             throw new IllegalArgumentException("Book with this ISBN already exists");
         }
 
-        var result = books.put(bookDto.isbn(), bookDto);
-        if (result != null) {
-            notificationService.sendNotification(bookDto, BookEventType.BOOK_CREATED);
-        }
+        books.put(bookDto.isbn(), bookDto);
+        notificationService.sendNotification(bookDto, BookEventType.BOOK_CREATED);
 
-        return result;
+        return bookDto;
     }
 
     @Override
@@ -73,12 +71,10 @@ public class BookServiceImpl implements BookService {
             throw new IllegalArgumentException("Book with this ISBN does not exist");
         }
 
-        var result = books.put(isbn, bookDto);
-        if (result != null) {
-            notificationService.sendNotification(bookDto, BookEventType.BOOK_UPDATED);
-        }
+        books.put(isbn, bookDto);
+        notificationService.sendNotification(bookDto, BookEventType.BOOK_UPDATED);
 
-        return result;
+        return bookDto;
     }
 
     @Override
@@ -89,7 +85,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(String isbn) {
         log.info("Deleting book with ISBN: {}", isbn);
-        
+
         var result = books.remove(isbn);
         if (result != null) {
             notificationService.sendNotification(result, BookEventType.BOOK_DELETED);

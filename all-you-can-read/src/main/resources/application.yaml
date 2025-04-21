@@ -4,3 +4,9 @@ server:
 spring:
   application:
     name: all-you-can-read
+
+app:
+  sqs:
+    name: book-for-all-you-can-read-queue
+
+debug: true

@@ -6,9 +6,11 @@ import dmk.poc.publishinghouseservice.service.NotificationService;
 import io.awspring.cloud.sns.core.SnsTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.http.MediaType;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -21,12 +23,13 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void sendNotification(BookDto bookDto, BookEventType eventType) {
-        Message<BookDto> message = MessageBuilder.withPayload(bookDto)
-                .setHeader("entityId", bookDto.isbn())
-                .setHeader("eventVersion", EVENT_VERSION_V1)
-                .setHeader("eventType", eventType.getValue())
-                .build();
+        Map<String, Object> headers = Map.of(
+                "entityId", bookDto.isbn(),
+                "eventVersion", EVENT_VERSION_V1,
+                "eventType", eventType.getValue(),
+                MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+        );
 
-        snsTemplate.send(topicName, message);
+        snsTemplate.convertAndSend(topicName, bookDto, headers);
     }
 }

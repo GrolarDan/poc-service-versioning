@@ -53,3 +53,17 @@ resource "aws_sns_topic" "book-topic" {
     Environment = "local"
   }
 }
+
+resource "aws_sqs_queue" "book-for-all-you-can-read-queue" {
+  name = "book-for-all-you-can-read-queue"
+
+  tags = {
+    Environment = "local"
+  }
+}
+
+resource "aws_sns_topic_subscription" "book-for-all-you-can-read-subscription" {
+  topic_arn = aws_sns_topic.book-topic.arn
+  protocol  = "sqs"
+  endpoint  = aws_sqs_queue.book-for-all-you-can-read-queue.arn
+}
