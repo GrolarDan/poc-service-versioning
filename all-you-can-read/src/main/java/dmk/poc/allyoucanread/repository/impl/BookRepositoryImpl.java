@@ -12,8 +12,9 @@ public class BookRepositoryImpl implements BookRepository {
     private final List<Book> books = new ArrayList<>();
 
     @Override
-    public void save(Book book) {
+    public Book save(Book book) {
         books.add(book);
+        return book;
     }
 
     @Override
