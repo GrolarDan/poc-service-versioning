@@ -1,7 +1,6 @@
 package dmk.poc.allyoucanread.controller;
 
 import dmk.poc.allyoucanread.dto.BookEventDto;
-import io.awspring.cloud.sqs.annotation.SnsNotificationMessage;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Headers;
@@ -14,7 +13,7 @@ import java.util.Map;
 public class BookEventHandler {
 
     @SqsListener(value = "${app.sqs.name}")
-    public void handleBookCreatedEvent(@SnsNotificationMessage BookEventDto bookEventDto, @Headers Map<String, Object> headers) {
+    public void handleBookCreatedEvent(BookEventDto bookEventDto, @Headers Map<String, Object> headers) {
         log.info("Received book created event: {}", bookEventDto);
 //        log.info("Original message: {}", originalMessage);
 //        log.info("Message attributes: {}", originalMessage.messageAttributes());

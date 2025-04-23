@@ -49,6 +49,14 @@ resource "aws_sns_topic" "book-topic" {
   name         = "book-topic"
   display_name = "Book Topic"
 
+  #   delivery_policy = <<EOF
+  # {
+  #     "requestPolicy": {
+  #       "headerContentType": "application/json"
+  #     }
+  # }
+  # EOF
+
   tags = {
     Environment = "local"
   }
@@ -63,7 +71,8 @@ resource "aws_sqs_queue" "book-for-all-you-can-read-queue" {
 }
 
 resource "aws_sns_topic_subscription" "book-for-all-you-can-read-subscription" {
-  topic_arn = aws_sns_topic.book-topic.arn
-  protocol  = "sqs"
-  endpoint  = aws_sqs_queue.book-for-all-you-can-read-queue.arn
+  topic_arn            = aws_sns_topic.book-topic.arn
+  protocol             = "sqs"
+  endpoint             = aws_sqs_queue.book-for-all-you-can-read-queue.arn
+  raw_message_delivery = true
 }

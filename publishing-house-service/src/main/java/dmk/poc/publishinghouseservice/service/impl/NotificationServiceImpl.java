@@ -3,6 +3,7 @@ package dmk.poc.publishinghouseservice.service.impl;
 import dmk.poc.publishinghouseservice.dto.BookDto;
 import dmk.poc.publishinghouseservice.dto.BookEventType;
 import dmk.poc.publishinghouseservice.service.NotificationService;
+import io.awspring.cloud.sns.core.SnsNotification;
 import io.awspring.cloud.sns.core.SnsTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,6 @@ public class NotificationServiceImpl implements NotificationService {
                 MessageHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
         );
 
-        snsTemplate.convertAndSend(topicName, bookDto, headers);
+        snsTemplate.sendNotification(topicName, SnsNotification.builder(bookDto).headers(headers).build());
     }
 }
