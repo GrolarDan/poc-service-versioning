@@ -82,4 +82,9 @@ resource "aws_sns_topic_subscription" "book-for-another-world-subscription" {
   protocol             = "sqs"
   endpoint             = aws_sqs_queue.book-for-another-world-queue.arn
   raw_message_delivery = true
+
+  filter_policy_scope = "MessageBody"
+  filter_policy = jsonencode({
+    genre = ["Fanfiction", "Fantasy", "Fiction narrative", "Fiction in verse", "Metafiction", "Mythology", "Realistic fiction", "Science fiction"]
+  })
 }
