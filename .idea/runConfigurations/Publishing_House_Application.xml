@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Publishing House Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="publishing-house-service" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="dmk.poc.publishinghouseservice.PublishingHouseApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

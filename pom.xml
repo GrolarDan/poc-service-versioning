@@ -30,6 +30,7 @@
     <modules>
         <module>publishing-house-service</module>
         <module>all-you-can-read</module>
+        <module>another-world</module>
     </modules>
 
     <dependencyManagement>

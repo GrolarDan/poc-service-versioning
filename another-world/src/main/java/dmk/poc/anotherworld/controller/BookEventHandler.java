@@ -1,8 +1,8 @@
-package dmk.poc.allyoucanread.controller;
+package dmk.poc.anotherworld.controller;
 
-import dmk.poc.allyoucanread.dto.BookEventDto;
-import dmk.poc.allyoucanread.service.BookMapper;
-import dmk.poc.allyoucanread.service.BookService;
+import dmk.poc.anotherworld.dto.BookEventDto;
+import dmk.poc.anotherworld.service.BookMapper;
+import dmk.poc.anotherworld.service.BookService;
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

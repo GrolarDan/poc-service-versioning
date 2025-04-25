@@ -1,0 +1,12 @@
+server:
+  port: 3101
+
+spring:
+  application:
+    name: another-world
+
+app:
+  sqs:
+    name: book-for-another-world-queue
+
+debug: true
