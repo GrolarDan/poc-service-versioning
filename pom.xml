@@ -23,6 +23,7 @@
         <io.awspring.cloud.version>3.3.0</io.awspring.cloud.version>
         <software.amazon.awssdk.version>2.31.23</software.amazon.awssdk.version>
         <mapstruct.version>1.6.3</mapstruct.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
 
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
     </properties>
@@ -42,14 +43,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>software.amazon.awssdk</groupId>-->
-<!--                <artifactId>bom</artifactId>-->
-<!--                <version>${software.amazon.awssdk.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
-
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
             <dependency>
                 <groupId>net.datafaker</groupId>
                 <artifactId>datafaker</artifactId>

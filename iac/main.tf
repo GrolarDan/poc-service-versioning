@@ -67,6 +67,10 @@ resource "aws_sns_topic_subscription" "book-for-all-you-can-read-subscription" {
   protocol             = "sqs"
   endpoint             = aws_sqs_queue.book-for-all-you-can-read-queue.arn
   raw_message_delivery = true
+
+  filter_policy = jsonencode({
+    eventVersion = ["v1"]
+  })
 }
 
 resource "aws_sqs_queue" "book-for-another-world-queue" {
@@ -83,8 +87,14 @@ resource "aws_sns_topic_subscription" "book-for-another-world-subscription" {
   endpoint             = aws_sqs_queue.book-for-another-world-queue.arn
   raw_message_delivery = true
 
-  filter_policy_scope = "MessageBody"
+  # This is not possible to combine message body and attributes in the same filter policy
+  # The only way to do this is to use MessageAttributes filter policy scope and filter by genre in the application
+  # filter_policy_scope = "MessageBody"
+  # filter_policy = jsonencode({
+  #   genre = ["Fanfiction", "Fantasy", "Fiction narrative", "Fiction in verse", "Metafiction", "Mythology", "Realistic fiction", "Science fiction"],
+  #   eventVersion = ["v1"]
+  # })
   filter_policy = jsonencode({
-    genre = ["Fanfiction", "Fantasy", "Fiction narrative", "Fiction in verse", "Metafiction", "Mythology", "Realistic fiction", "Science fiction"]
+    eventVersion = ["v1"]
   })
 }
