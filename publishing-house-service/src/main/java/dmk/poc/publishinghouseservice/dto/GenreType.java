@@ -6,36 +6,46 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum GenreType {
-    CLASSIC("Classic"),
-    COMIC("Comic/Graphic Novel"),
-    CRIME("Crime/Detective"),
-    FABLE("Fable"),
-    FAIRY_TALE("Fairy tale"),
-    FANFICTION("Fanfiction"),
-    FANTASY("Fantasy"),
-    FICTION_NARRATIVE("Fiction narrative"),
-    FICTION_IN_VERSE("Fiction in verse"),
-    FOLKLORE("Folklore"),
-    HISTORICAL_FICTION("Historical fiction"),
-    HORROR("Horror"),
-    HUMOR("Humor"),
-    LEGEND("Legend"),
-    METAFICTION("Metafiction"),
-    MYSTERY("Mystery"),
-    MYTHOLOGY("Mythology"),
-    MYTHOPOEIA("Mythopoeia"),
-    REALISTIC_FICTION("Realistic fiction"),
-    SCIENCE_FICTION("Science fiction"),
-    SHORT_STORY("Short story"),
-    SUSPENSE("Suspense/Thriller"),
-    TALL_TALE("Tall tale"),
-    WESTERN("Western"),
-    BIOGRAPHY("Biography/Autobiography"),
-    ESSAY("Essay"),
-    NARRATIVE_NONFICTION("Narrative nonfiction"),
-    SPEECH("Speech"),
-    TEXTBOOK("Textbook"),
-    REFERENCE_BOOK("Reference book");
+    CLASSIC(1, "Classic"),
+    COMIC(2, "Comic/Graphic Novel"),
+    CRIME(3, "Crime/Detective"),
+    FABLE(4, "Fable"),
+    FAIRY_TALE(5, "Fairy tale"),
+    FANFICTION(6, "Fanfiction"),
+    FANTASY(7, "Fantasy"),
+    FICTION_NARRATIVE(8, "Fiction narrative"),
+    FICTION_IN_VERSE(9, "Fiction in verse"),
+    FOLKLORE(10, "Folklore"),
+    HISTORICAL_FICTION(11, "Historical fiction"),
+    HORROR(12, "Horror"),
+    HUMOR(13, "Humor"),
+    LEGEND(14, "Legend"),
+    METAFICTION(15, "Metafiction"),
+    MYSTERY(16, "Mystery"),
+    MYTHOLOGY(17, "Mythology"),
+    MYTHOPOEIA(18, "Mythopoeia"),
+    REALISTIC_FICTION(19, "Realistic fiction"),
+    SCIENCE_FICTION(20, "Science fiction"),
+    SHORT_STORY(21, "Short story"),
+    SUSPENSE(22, "Suspense/Thriller"),
+    TALL_TALE(23, "Tall tale"),
+    WESTERN(24, "Western"),
+    BIOGRAPHY(25, "Biography/Autobiography"),
+    ESSAY(26, "Essay"),
+    NARRATIVE_NONFICTION(27, "Narrative nonfiction"),
+    SPEECH(28, "Speech"),
+    TEXTBOOK(29, "Textbook"),
+    REFERENCE_BOOK(30, "Reference book");
 
+    private final Integer id;
     private final String value;
+
+    public static GenreType fromId(Integer id) {
+        for (GenreType genre : GenreType.values()) {
+            if (genre.getId().equals(id)) {
+                return genre;
+            }
+        }
+        throw new IllegalArgumentException("No genre found with id: " + id);
+    }
 }
