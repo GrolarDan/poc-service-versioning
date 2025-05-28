@@ -98,3 +98,22 @@ resource "aws_sns_topic_subscription" "book-for-another-world-subscription" {
     eventVersion = ["v1"]
   })
 }
+
+resource "aws_sqs_queue" "test-queue" {
+  name = "test-queue"
+
+  tags = {
+    Environment = "local"
+  }
+}
+
+resource "aws_sns_topic_subscription" "test-subscription" {
+  topic_arn            = aws_sns_topic.book-topic.arn
+  protocol             = "sqs"
+  endpoint             = aws_sqs_queue.test-queue.arn
+  raw_message_delivery = true
+
+  filter_policy = jsonencode({
+    eventVersion = ["v1", "v2"]
+  })
+}

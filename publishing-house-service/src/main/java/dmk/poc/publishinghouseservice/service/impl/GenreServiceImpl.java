@@ -19,7 +19,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<GenreDto> getAllGenres() {
-        return Arrays.stream(GenreType.values()).map(genreMapper::mapToDto).toList();
+        return Arrays.stream(GenreType.values()).map(genreMapper::mapFromGenreTypeToDto).toList();
     }
 
     @Override
@@ -33,6 +33,6 @@ public class GenreServiceImpl implements GenreService {
                 GenreType.MYTHOLOGY,
                 GenreType.REALISTIC_FICTION,
                 GenreType.SCIENCE_FICTION
-        ).map(genreMapper::mapToDto).toList();
+        ).map(genreMapper::mapFromGenreTypeToDto).toList();
     }
 }

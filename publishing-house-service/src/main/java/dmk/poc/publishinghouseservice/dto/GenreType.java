@@ -3,6 +3,8 @@ package dmk.poc.publishinghouseservice.dto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @Getter
 @RequiredArgsConstructor
 public enum GenreType {
@@ -40,12 +42,21 @@ public enum GenreType {
     private final Integer id;
     private final String value;
 
-    public static GenreType fromId(Integer id) {
+    public static Optional<GenreType> fromId(Integer id) {
         for (GenreType genre : GenreType.values()) {
             if (genre.getId().equals(id)) {
-                return genre;
+                return Optional.of(genre);
             }
         }
-        throw new IllegalArgumentException("No genre found with id: " + id);
+        return Optional.empty();
+    }
+
+    public static Optional<GenreType> fromValue(String value) {
+        for (GenreType genre : GenreType.values()) {
+            if (genre.getValue().equalsIgnoreCase(value)) {
+                return Optional.of(genre);
+            }
+        }
+        return Optional.empty();
     }
 }

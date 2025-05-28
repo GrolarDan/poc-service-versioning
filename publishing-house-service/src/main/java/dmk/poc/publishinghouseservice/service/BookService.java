@@ -1,6 +1,7 @@
 package dmk.poc.publishinghouseservice.service;
 
 import dmk.poc.publishinghouseservice.dto.BookDto;
+import dmk.poc.publishinghouseservice.dto.BookEditDto;
 
 import java.util.List;
 
@@ -9,9 +10,9 @@ public interface BookService {
 
     List<BookDto> getAllBooks();
 
-    BookDto createBook(BookDto bookDto);
+    BookDto createBook(BookEditDto bookDto);
 
-    BookDto updateBook(String isbn, BookDto bookDto);
+    BookDto updateBook(String isbn, BookEditDto bookDto);
 
     BookDto getBook(String isbn);
 

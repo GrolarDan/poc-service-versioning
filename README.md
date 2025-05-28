@@ -58,10 +58,11 @@ The page is available at the following URL:
 `http://localhost:3101`
 
 # Process of version update
-1. Create a new version of the PWS service (e.g. V2) with the new structure of the event.
-   1. Create a new class `BookV2Dto` with the new structure of the event.
-   2. Update the `NotificationService` class to publish both event versions.
-   3. Deploy the new version of the service (PWS) with the new structure of the event.
+1. Create a new version of the PHS service (e.g. V2) with the new structure of the event.
+   1. Update model class `Book` enhancing with the `genreId` field.
+   2. Create a new class `BookV2Dto` with the new structure of the event.
+   3. Update the `NotificationService` class to publish both event versions.
+   4. Deploy the new version of the service (PHS) with the new structure of the event.
 2. Create a new version of the event handler in the AYCRS and AWS services.
    1. Create a new class `BookEventV2Dto` with the new structure of the event.
    2. Create a new class `BookEventV2Handler` to handle the new version of the event.
@@ -73,7 +74,7 @@ The page is available at the following URL:
 4. Delete the old version of the event handler in the AYCRS and AWS services.
    1. Delete the old version of the event handler.
    2. Deploy both services (AYCRS, AWS) with the new version of the event handler only.
-5. When there is no topic subscription with filter on `V1` version, we can delete the old version of the event in the PWS service.
-   1. Delete the old version of the event in the PWS service.
-   2. Deploy the new version of the service (PWS) with the new structure of the event only.
+5. When there is no topic subscription with filter on `V1` version, we can delete the old version of the event in the PHS service.
+   1. Delete the old version of the event in the PHS service.
+   2. Deploy the new version of the service (PHS) with the new structure of the event only.
 6. Job is **DONE** 

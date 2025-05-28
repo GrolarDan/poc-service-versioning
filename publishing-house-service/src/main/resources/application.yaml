@@ -18,5 +18,12 @@ app:
 springdoc:
   swagger-ui:
     path: /swagger-ui
+  group-configs:
+    - group: v1
+      paths-to-match:
+        - /v1/**
+    - group: v2
+      paths-to-match:
+        - /v2/**
 
 debug: true

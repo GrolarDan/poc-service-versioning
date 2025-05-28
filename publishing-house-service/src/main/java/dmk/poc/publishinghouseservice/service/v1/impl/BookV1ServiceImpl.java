@@ -1,11 +1,10 @@
-package dmk.poc.publishinghouseservice.service.impl;
+package dmk.poc.publishinghouseservice.service.v1.impl;
 
-import dmk.poc.publishinghouseservice.dto.BookDto;
-import dmk.poc.publishinghouseservice.dto.BookEditDto;
+import dmk.poc.publishinghouseservice.dto.v1.BookV1Dto;
 import dmk.poc.publishinghouseservice.dto.BookEventType;
 import dmk.poc.publishinghouseservice.repository.BookRepository;
-import dmk.poc.publishinghouseservice.service.BookMapper;
-import dmk.poc.publishinghouseservice.service.BookService;
+import dmk.poc.publishinghouseservice.service.v1.BookV1Mapper;
+import dmk.poc.publishinghouseservice.service.v1.BookV1Service;
 import dmk.poc.publishinghouseservice.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,28 +16,28 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class BookServiceImpl implements BookService {
+public class BookV1ServiceImpl implements BookV1Service {
 
     private final Faker faker;
     private final NotificationService notificationService;
-    private final BookMapper bookMapper;
+    private final BookV1Mapper bookMapper;
     private final BookRepository bookRepository;
 
     @Override
-    public BookDto storeBook() {
+    public BookV1Dto storeBook() {
         var fakerBook = faker.book();
         return createBook(
-                new BookEditDto(faker.code().ean13(), fakerBook.title(), fakerBook.author(), fakerBook.publisher(), faker.random().nextInt(1, 31))
+                new BookV1Dto(faker.code().ean13(), fakerBook.title(), fakerBook.author(), fakerBook.publisher(), fakerBook.genre())
         );
     }
 
     @Override
-    public List<BookDto> getAllBooks() {
+    public List<BookV1Dto> getAllBooks() {
         return bookRepository.findAll().stream().map(bookMapper::mapToDto).toList();
     }
 
     @Override
-    public BookDto createBook(BookEditDto bookDto) {
+    public BookV1Dto createBook(BookV1Dto bookDto) {
         log.info("Creating book: {}", bookDto);
 
         if (bookDto == null || bookDto.isbn() == null) {
@@ -49,15 +48,14 @@ public class BookServiceImpl implements BookService {
             throw new IllegalArgumentException("Book with this ISBN already exists");
         }
 
-        var savedBook = bookRepository.save(bookMapper.mapToEntity(bookDto));
-        var savedBookDto = bookMapper.mapToDto(savedBook);
-        notificationService.sendNotification(savedBookDto, BookEventType.BOOK_CREATED);
+        bookRepository.save(bookMapper.mapToEntity(bookDto));
+        notificationService.sendNotification(bookDto, BookEventType.BOOK_CREATED);
 
-        return savedBookDto;
+        return bookDto;
     }
 
     @Override
-    public BookDto updateBook(String isbn, BookEditDto bookDto) {
+    public BookV1Dto updateBook(String isbn, BookV1Dto bookDto) {
         log.info("Updating book: {}", bookDto);
 
         if (isbn == null || bookDto == null) {
@@ -72,15 +70,14 @@ public class BookServiceImpl implements BookService {
             throw new IllegalArgumentException("Book with this ISBN does not exist");
         }
 
-        var savedBook = bookRepository.save(bookMapper.mapToEntity(bookDto));
-        var savedBookDto = bookMapper.mapToDto(savedBook);
-        notificationService.sendNotification(savedBookDto, BookEventType.BOOK_UPDATED);
+        bookRepository.save(bookMapper.mapToEntity(bookDto));
+        notificationService.sendNotification(bookDto, BookEventType.BOOK_UPDATED);
 
-        return savedBookDto;
+        return bookDto;
     }
 
     @Override
-    public BookDto getBook(String isbn) {
+    public BookV1Dto getBook(String isbn) {
         return bookMapper.mapToDto(bookRepository.findByIsbn(isbn));
     }
 

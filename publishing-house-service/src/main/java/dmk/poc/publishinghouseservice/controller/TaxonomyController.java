@@ -6,18 +6,20 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static dmk.poc.publishinghouseservice.controller.TaxonomyController.TAXONOMY_PATH;
-import static dmk.poc.publishinghouseservice.controller.TaxonomyController.VERSION_PATH;
+import static dmk.poc.publishinghouseservice.controller.TaxonomyController.*;
 
-@RestController(value = VERSION_PATH + TAXONOMY_PATH)
+@RestController
+@RequestMapping(value = {VERSION_V1_PATH + TAXONOMY_PATH, VERSION_V2_PATH + TAXONOMY_PATH}, produces = "application/json")
 @RequiredArgsConstructor
 @Tag(name = "Taxonomy", description = "Taxonomy API")
 public class TaxonomyController {
-    static final String VERSION_PATH = "/v1";
+    static final String VERSION_V1_PATH = "v1";
+    static final String VERSION_V2_PATH = "v2";
     static final String TAXONOMY_PATH = "/taxonomy";
 
     private final GenreService genreService;
