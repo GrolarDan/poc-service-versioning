@@ -130,5 +130,6 @@ replay_pid*
 
 /iac/.terraform/
 /iac/.terraform.lock.hcl
+/iac/.terraform.tfstate.lock.info
 /iac/terraform.tfstate
 /iac/terraform.tfstate.backup
